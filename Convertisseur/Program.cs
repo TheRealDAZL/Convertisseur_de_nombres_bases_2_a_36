@@ -4,13 +4,13 @@
 string[] SYMBOLES_POUR_CONVERSION = new string[36] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 string continuer = "";
 
-// Exécuter le bloc de code suivant
+// Exécuter le bloc de code suivant, et recommencer la boucle do-while tant que la variable booléene validation_nombre_a_convertir a la valeur faux
 do
 {
-    // Déclarer puis initialiser ou réinitialiser les variables
+    // Déclarer puis initialiser/réinitialiser les variables
     int representation_initiale = -1;
     int base_de_lexponentielle = -1;
-    bool ok = true;
+    bool validation_nombre_a_convertir = true;
 
     // Exécuter le bloc de code suivant
     do
@@ -18,7 +18,8 @@ do
         // Exécuter le bloc de code suivant, tout en cherchant pour des erreurs
         try
         {
-            ok = true;
+            // Réinitialiser la variable
+            validation_nombre_a_convertir = true;
 
             // Entrer le nombre à convertir
             Console.WriteLine("Entrez un nombre entier tel que représenté en base 10 :");
@@ -26,27 +27,31 @@ do
             // Lire la valeur entrée
             representation_initiale = int.Parse(Console.ReadLine());
 
-            // Afficher le message
+            // Afficher ce message
             Console.Write("\n");
         }
 
         // S'il y a une ou des erreurs de format, afficher ces messages
         catch (FormatException)
         {
-            ok = false;
+            // Changer la valeur de la variable validation_nombre_a_convertir si on obtient une erreur
+            validation_nombre_a_convertir = false;
+
+            // Afficher ce message
             Console.WriteLine("Cette entrée n'est pas valide.\n");
         }
 
         // S'il y a une ou des erreurs d'overflow, afficher ces messages
         catch (System.OverflowException)
         {
-            ok = false;
+            // Changer la valeur de la variable validation_nombre_a_convertir si on obtient une erreur
+            validation_nombre_a_convertir = false;
 
-            // Référence : Microsoft - Double.MaxValue Field : https://learn.microsoft.com/en-us/dotnet/api/system.double.maxvalue?view=net-7.0
+            // Afficher ce message
             Console.WriteLine("Ce nombre est trop large. Entrez une valeur plus petite.\n");
         }
     }
-    while (!ok);
+    while (!validation_nombre_a_convertir);
 
     // Exécuter le bloc de code suivant
     do
@@ -60,7 +65,7 @@ do
             // Lire la valeur entrée
             base_de_lexponentielle = int.Parse(Console.ReadLine());
 
-            // Afficher le message
+            // Afficher ce message
             Console.Write("\n");
         }
 
@@ -82,16 +87,19 @@ do
     // Exécuter la méthode CalculerEtAfficher
     CalculerEtAfficher(representation_initiale, base_de_lexponentielle);
 
-    // Afficher le message
+    // Afficher ce message
     Console.WriteLine("\nVoulez-vous continuer? Tapez \"n\" (pour non), puis appuyez sur la touche Entrée pour terminer le programme.");
 
     // Lire la réponse
     continuer = Console.ReadLine();
 
     // Si la variable continuer est non vide, alors on prend le premier caractère et on le met en minuscule
-    if (continuer != "") continuer = continuer.Substring(0, 1).ToLower();
+    if (continuer != "")
+    {
+        continuer = continuer.Substring(0, 1).ToLower();
+    }
 
-    // Afficher le message
+    // Afficher ce message
     Console.Write("\n");
 } while (continuer != "n"); // Continuer la boucle do-while tant que la variable quitter est différente de non
 
