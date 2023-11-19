@@ -18,6 +18,8 @@ do
         // Exécuter le bloc de code suivant, tout en cherchant pour des erreurs
         try
         {
+            ok = true;
+
             // Entrer le nombre à convertir
             Console.WriteLine("Entrez un nombre entier tel que représenté en base 10 :");
 
@@ -123,7 +125,7 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
 
         // Afficher une partie du message
         // Référence : GeeksforGeeks - Program to Print a New Line in C# https://www.geeksforgeeks.org/program-to-print-a-new-line-in-c-sharp/
-        Console.WriteLine("\nLe nombre " + representation_initiale + " représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
+        Console.WriteLine("Le nombre " + representation_initiale + " représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
 
         if (representation_initiale > 0)
         {
@@ -190,7 +192,7 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
     {
         // Afficher une partie du message
         // Référence : GeeksforGeeks - Program to Print a New Line in C# https://www.geeksforgeeks.org/program-to-print-a-new-line-in-c-sharp/
-        Console.WriteLine("\nLe nombre 0 représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
+        Console.WriteLine("Le nombre 0 représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
 
         // Afficher le résultat
         Console.WriteLine("Chiffre 1 -> 0");
