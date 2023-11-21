@@ -157,7 +157,7 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
             // Initialiser la variable restant
             restant = -representation_initiale;
         }
-        
+
         // Pour i compris entre le plus_gros_exposant et 0, exécuter le bloc de code suivant
         // Référence : W3Schools - C# For Loop https://www.w3schools.com/cs/cs_for_loop.php
         for (int compteur_dexposants = plus_gros_exposant; compteur_dexposants >= 0; compteur_dexposants--)
