@@ -38,11 +38,22 @@ do
             validation_nombre_a_convertir = false;
 
             // Afficher ce message
-            Console.WriteLine("Cette entrée n'est pas valide.\n");
+            Console.WriteLine("\nCette entrée n'est pas valide.\n");
         }
 
         // S'il y a une ou des erreurs d'overflow, afficher ces messages
         catch (System.OverflowException)
+        {
+            // Changer la valeur de la variable validation_nombre_a_convertir si on obtient une erreur
+            validation_nombre_a_convertir = false;
+
+            // Afficher ce message
+            Console.WriteLine("\nCe nombre est trop large. Entrez une valeur plus petite.\n");
+        }
+
+        // Si la valeur absolue de representation_initiale est égale à -2147483648 (soit la valeur Int32.MinValue),
+        // exécuter le code suivant. Si on ne fait pas ça, on obtient une erreur plus tard dans l'exécution du programme
+        if (representation_initiale == -2147483648)
         {
             // Changer la valeur de la variable validation_nombre_a_convertir si on obtient une erreur
             validation_nombre_a_convertir = false;
