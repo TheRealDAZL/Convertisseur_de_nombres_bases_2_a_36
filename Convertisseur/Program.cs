@@ -11,7 +11,7 @@ do
     // representation_initiale et la valeur de donnees.Item2 correspond à base_de_lexponentielle
     var donnees = EntrerEtValiderDonnees();
 
-    // Exécuter la méthode CalculerEtAfficher(donnees.Item1, donneees.Item2)
+    // Exécuter la méthode CalculerEtAfficher(donnees.Item1, donnees.Item2)
     CalculerEtAfficher(donnees.Item1, donnees.Item2);
 
     // Exécuter la méthode 
@@ -110,6 +110,7 @@ Tuple<int, int> EntrerEtValiderDonnees()
     }
     while (base_de_lexponentielle < 2 || base_de_lexponentielle > 36);
 
+    // Retourner l'objet Tuple<int, int>(representation_initiale, base_de_lexponentielle)
     return new Tuple<int, int>(representation_initiale, base_de_lexponentielle);
 }
 
@@ -120,13 +121,13 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
     int restant;
     int chiffre_a_convertir;
     int position_du_chiffre;
+    int signe = 1;
     string representation_finale = "";
 
-    int signe = 1;
-
-    // Si le nombre entré correspond aux conditions données, alors on exécute le bloc de code suivant
+    // Si la valeur de representation_initiale diffère de 0
     if (representation_initiale != 0)
     {
+        // Si le nombre à convertir est négatif, attribuer une valeur de -1 à la variable int signe
         if (representation_initiale < 0)
         {
             signe = -1;
@@ -140,12 +141,14 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
         // Référence : GeeksforGeeks - Program to Print a New Line in C# https://www.geeksforgeeks.org/program-to-print-a-new-line-in-c-sharp/
         Console.WriteLine("Le nombre " + representation_initiale + " représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
 
+        // Si le signe du nombre à convertir est positif
         if (signe == 1)
         {
             // Afficher le signe du nombre
             Console.WriteLine("\nLe signe du nombre à convertir est positif\n");
         }
 
+        // Si le signe du nombre à convertir est négatif
         else
         {
             // Afficher le signe du nombre
@@ -182,15 +185,17 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
             representation_finale = representation_finale + SYMBOLES_POUR_CONVERSION[chiffre_a_convertir];
         }
 
+        // Si la valeur de representation_initiale est négative, alors on ajoute un tiret en avant de la valeur de representation_finale
         if (representation_initiale < 0)
         {
             representation_finale = "-" + representation_finale;
         }
 
-        // Afficher la variable representation_finale
+        // Afficher la valeur de representation_finale
         Console.WriteLine("\nLe nombre " + representation_initiale + " représenté en base 10 est équivalent au nombre " + representation_finale + " représenté en base " + base_de_lexponentielle + ".");
     }
 
+    // Si la valeur de representation_initiale est 0
     else
     {
         // Afficher une partie du message
