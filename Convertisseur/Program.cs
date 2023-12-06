@@ -7,9 +7,24 @@ string continuer = "";
 // Exécuter le bloc de code suivant, et recommencer la boucle do-while tant que la variable booléene validation_nombre_a_convertir a la valeur faux
 do
 {
+    // Exécuter la méthode EntrerEtValiderDonnees(), puis enregistrer les valeurs de retour dans donnees. La valeur de donnees.Item1 correspond à
+    // representation_initiale et la valeur de donnees.Item2 correspond à base_de_lexponentielle
+    var donnees = EntrerEtValiderDonnees();
+
+    // Exécuter la méthode CalculerEtAfficher(donnees.Item1, donneees.Item2)
+    CalculerEtAfficher(donnees.Item1, donnees.Item2);
+
+    // Exécuter la méthode 
+    continuer = ContinuerOupas();
+} while (continuer != "n"); // Continuer la boucle do-while tant que la variable quitter est différente de non
+
+
+
+Tuple<int, int> EntrerEtValiderDonnees()
+{
     // Déclarer puis initialiser/réinitialiser les variables
-    int representation_initiale = -1;
-    int base_de_lexponentielle = -1;
+    int representation_initiale = 0;
+    int base_de_lexponentielle = 0;
     bool validation_nombre_a_convertir = true;
 
     // Exécuter le bloc de code suivant
@@ -95,26 +110,8 @@ do
     }
     while (base_de_lexponentielle < 2 || base_de_lexponentielle > 36);
 
-    // Exécuter la méthode CalculerEtAfficher
-    CalculerEtAfficher(representation_initiale, base_de_lexponentielle);
-
-    // Afficher ce message
-    Console.WriteLine("\nVoulez-vous continuer? Tapez \"n\" (pour non), puis appuyez sur la touche Entrée pour terminer le programme.");
-
-    // Lire la réponse
-    continuer = Console.ReadLine();
-
-    // Si la variable continuer est non vide, alors on prend le premier caractère et on le met en minuscule
-    if (continuer != "")
-    {
-        continuer = continuer.Substring(0, 1).ToLower();
-    }
-
-    // Afficher ce message
-    Console.Write("\n");
-} while (continuer != "n"); // Continuer la boucle do-while tant que la variable quitter est différente de non
-
-
+    return new Tuple<int, int>(representation_initiale, base_de_lexponentielle);
+}
 
 void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
 {
@@ -125,38 +122,38 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
     int position_du_chiffre;
     string representation_finale = "";
 
+    int signe = 1;
+
     // Si le nombre entré correspond aux conditions données, alors on exécute le bloc de code suivant
     if (representation_initiale != 0)
     {
-        if (representation_initiale > 0)
+        if (representation_initiale < 0)
         {
-            // Trouver le plus gros exposant pour décomposer la valeur entrée dans la base donnée
-            // Référence : Microsoft - Math.Log Method https://learn.microsoft.com/en-us/dotnet/api/system.math.log2?view=net-7.0
-            plus_gros_exposant = (int)Math.Floor(Math.Log(representation_initiale, base_de_lexponentielle));
+            signe = -1;
         }
 
-        else
-        {
-            // Trouver le plus gros exposant pour décomposer la valeur entrée dans la base donnée
-            // Référence : Microsoft - Math.Log Method https://learn.microsoft.com/en-us/dotnet/api/system.math.log2?view=net-7.0
-            plus_gros_exposant = (int)Math.Floor(Math.Log(-representation_initiale, base_de_lexponentielle));
-        }
+        // Trouver le plus gros exposant pour décomposer la valeur entrée dans la base donnée
+        // Référence : Microsoft - Math.Log Method https://learn.microsoft.com/en-us/dotnet/api/system.math.log2?view=net-7.0
+        plus_gros_exposant = (int)Math.Floor(Math.Log(signe * representation_initiale, base_de_lexponentielle));
 
         // Afficher une partie du message
         // Référence : GeeksforGeeks - Program to Print a New Line in C# https://www.geeksforgeeks.org/program-to-print-a-new-line-in-c-sharp/
         Console.WriteLine("Le nombre " + representation_initiale + " représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
 
-        if (representation_initiale > 0)
+        if (signe == 1)
         {
-            // Initialiser la variable restant
-            restant = representation_initiale;
+            // Afficher le signe du nombre
+            Console.WriteLine("\nLe signe du nombre à convertir est positif\n");
         }
 
         else
         {
-            // Initialiser la variable restant
-            restant = -representation_initiale;
+            // Afficher le signe du nombre
+            Console.WriteLine("\nLe signe du nombre à convertir est négatif\n");
         }
+
+        // Initialiser la variable restant
+        restant = signe * representation_initiale;
 
         // Pour i compris entre le plus_gros_exposant et 0, exécuter le bloc de code suivant
         // Référence : W3Schools - C# For Loop https://www.w3schools.com/cs/cs_for_loop.php
@@ -171,17 +168,8 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
             // Définir ou redéfinir la variable position_du_chiffre
             position_du_chiffre = compteur_dexposants + 1;
 
-            if (representation_initiale > 0)
-            {
-                // Afficher le résultat
-                Console.WriteLine("Chiffre " + position_du_chiffre + " -> (+1) * " + SYMBOLES_POUR_CONVERSION[chiffre_a_convertir]);
-            }
-
-            else
-            {
-                // Afficher le résultat
-                Console.WriteLine("Chiffre " + position_du_chiffre + " -> (-1) * " + SYMBOLES_POUR_CONVERSION[chiffre_a_convertir]);
-            }
+            // Afficher le résultat
+            Console.WriteLine("Chiffre " + position_du_chiffre + " -> " + SYMBOLES_POUR_CONVERSION[chiffre_a_convertir] + " * " + base_de_lexponentielle + "^" + compteur_dexposants);
 
             // Si i > 0, alors afficher ce message
             if (compteur_dexposants > 0)
@@ -194,17 +182,13 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
             representation_finale = representation_finale + SYMBOLES_POUR_CONVERSION[chiffre_a_convertir];
         }
 
-        if (representation_initiale > 0)
+        if (representation_initiale < 0)
         {
-            // Afficher la variable representation_finale
-            Console.WriteLine("\nLe nombre " + representation_initiale + " représenté en base 10 est équivalent au nombre " + representation_finale + " représenté en base " + base_de_lexponentielle + ".");
+            representation_finale = "-" + representation_finale;
         }
 
-        else
-        {
-            // Afficher la variable representation_finale
-            Console.WriteLine("\nLe nombre " + representation_initiale + " représenté en base 10 est équivalent au nombre -" + representation_finale + " représenté en base " + base_de_lexponentielle + ".");
-        }
+        // Afficher la variable representation_finale
+        Console.WriteLine("\nLe nombre " + representation_initiale + " représenté en base 10 est équivalent au nombre " + representation_finale + " représenté en base " + base_de_lexponentielle + ".");
     }
 
     else
@@ -213,10 +197,34 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
         // Référence : GeeksforGeeks - Program to Print a New Line in C# https://www.geeksforgeeks.org/program-to-print-a-new-line-in-c-sharp/
         Console.WriteLine("Le nombre 0 représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
 
+        // Afficher le signe du nombre
+        Console.WriteLine("\nLe nombre à convertir ne possède pas de signe\n");
+
         // Afficher le résultat
-        Console.WriteLine("Chiffre 1 -> 0");
+        Console.WriteLine("Chiffre 1 -> 0 * " + base_de_lexponentielle + "^0");
 
         // Afficher la variable representation_finale
         Console.WriteLine("\nLe nombre 0 représenté en base 10 est équivalent au nombre 0 représenté en base " + base_de_lexponentielle + ".");
     }
+}
+
+string ContinuerOupas()
+{
+    // Afficher ce message
+    Console.WriteLine("\nVoulez-vous continuer? Tapez \"n\" (pour non), puis appuyez sur la touche Entrée pour terminer le programme.");
+
+    // Lire la réponse
+    string reponse = Console.ReadLine();
+
+    // Si la variable continuer est non vide, alors on prend le premier caractère et on le met en minuscule
+    if (reponse != "")
+    {
+        reponse = reponse.Substring(0, 1).ToLower();
+    }
+
+    // Afficher ce message
+    Console.Write("\n");
+
+    // Retourner la valeur du string reponse
+    return reponse;
 }
