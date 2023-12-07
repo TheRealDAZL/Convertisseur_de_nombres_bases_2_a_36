@@ -2,8 +2,7 @@
 
 
 
-// Déclarer et initialiser les constantes et la variable
-string[] SYMBOLES_POUR_CONVERSION = new string[36] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+// Déclarer et initialiser la variable
 string continuer = "";
 
 // Exécuter le bloc de code suivant, et recommencer la boucle do-while tant que la variable continuer est différente de "n"
@@ -11,10 +10,10 @@ do
 {
     // Exécuter la méthode EntrerEtValiderDonnees(), puis enregistrer les valeurs de retour dans donnees. La valeur de donnees.Item1 correspond à
     // representation_initiale et la valeur de donnees.Item2 correspond à base_de_lexponentielle
-    var donnees = EntrerEtValiderDonnees();
+    var donnees_entrees = EntrerEtValiderDonnees();
 
-    // Exécuter la méthode CalculerEtAfficher(donnees.Item1, donnees.Item2)
-    CalculerEtAfficher(donnees.Item1, donnees.Item2);
+    // Exécuter la méthode ConvertirEtAfficher(donnees.Item1, donnees.Item2)
+    ConvertirEtAfficher(donnees_entrees.Item1, donnees_entrees.Item2);
 
     // Exécuter la méthode ContinuerOuPas()
     continuer = ContinuerOuPas();
@@ -115,19 +114,33 @@ Tuple<int, int> EntrerEtValiderDonnees()
     return new Tuple<int, int>(representation_initiale, base_de_lexponentielle);
 }
 
-void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
+void ConvertirEtAfficher(int representation_initiale, int base_de_lexponentielle)
 {
+    // Déclarer et initialiser les constantes
+    string[] SYMBOLES_POUR_CONVERSION = new string[36] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
     // Si la valeur de representation_initiale diffère de 0
     if (representation_initiale != 0)
     {
-        // Trouver le plus gros exposant pour décomposer la valeur entrée dans la base donnée
-        int plus_gros_exposant = (int)Math.Floor(Math.Log(Math.Abs(representation_initiale), base_de_lexponentielle));
+        // Déclarer et initialiser la variable restant
+        double restant = Math.Abs(representation_initiale);
+
+        // Trouver le plus gros exposant entier, afin de décomposer la valeur entrée dans la base donnée
+        // Note : au début, j'avais utilisé la méthode Math.Floor(Math.Log(restant, base_de_lexponentielle)),
+        // mais je me trouvais avec une erreur de résultat dûe à la précision limité de la variable de type
+        // double. Ainsi, j'arrondis en premier le résultat de Math.Log(restant, base_de_lexponentielle) au
+        // 14 décimales près, puis j'arrondis vers 0 le résultat obtenu au premier nombre entier
+        // Référence : Microsoft - Math.Round Method
+        // https://learn.microsoft.com/en-us/dotnet/api/system.math.round?view=net-8.0
+        // Référence : Microsoft - Floating-point numeric types (C# reference)
+        // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types
+        double plus_gros_exposant_entier = Math.Round(Math.Round(Math.Log(restant, base_de_lexponentielle), 14), 0, (MidpointRounding)2);
 
         // Afficher une partie du message
         Console.WriteLine("Le nombre " + representation_initiale + " représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
 
         // Si le signe du nombre à convertir est positif, afficher ce message
-        if (Math.Sign(representation_initiale) == 1)
+        if (representation_initiale > 0)
         {
             Console.WriteLine("\nLe signe du nombre est positif\n");
         }
@@ -138,12 +151,11 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
             Console.WriteLine("\nLe signe du nombre est négatif\n");
         }
 
-        // Déclarer et initialiser les variables restant et representation_finale
-        int restant = Math.Abs(representation_initiale);
+        // Déclarer et initialiser la variable representation_finale
         string representation_finale = "";
 
         // Pour une valeur de compteur_dexposants entre la valeur de plus_gros_exposant et de 0, exécuter le bloc de code suivant
-        for (int compteur_dexposants = plus_gros_exposant; compteur_dexposants >= 0; compteur_dexposants--)
+        for (double compteur_dexposants = plus_gros_exposant_entier; compteur_dexposants >= 0; compteur_dexposants--)
         {
             // Déclarer et initialiser la variable nombre_a_convertir_en_chiffre
             int nombre_a_convertir_en_chiffre = 0;
@@ -151,7 +163,7 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
             // Exécuter les instructions suivantes à la condition que (restant - Math.Pow(base_de_lexponentielle, compteur_dexposants)) >= 0
             while (restant - Math.Pow(base_de_lexponentielle, compteur_dexposants) >= 0)
             {
-                restant = restant - (int)Math.Pow(base_de_lexponentielle, compteur_dexposants);
+                restant = restant - Math.Pow(base_de_lexponentielle, compteur_dexposants);
 
                 nombre_a_convertir_en_chiffre++;
             }
