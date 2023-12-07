@@ -1,4 +1,4 @@
-# Convertisseur-de-nombres-en-base-2-a-36
+# Convertisseur_de_nombres_bases_2_a_36
 Mon programme permet de convertir les nombres entiers représentés en base 10 en leur représentation dans une base entière, de la base 2 à la base 36
 
 Screenshot sur les jeux d'essai pour des valeurs positives représentées en base 2
