@@ -66,8 +66,8 @@ Tuple<int, int> EntrerEtValiderDonnees()
             Console.WriteLine("\nCe nombre est trop large. Entrez une valeur plus petite.\n");
         }
 
-        // Si la valeur absolue de representation_initiale est égale à -2147483648 (soit la valeur de Int32.MaxValue en nombre négatif),
-        // exécuter le code suivant. Si on ne fait pas ça, on obtient une erreur plus tard dans l'exécution du programme
+        // Si la valeur absolue de representation_initiale est égale à -2147483648 (soit la valeur de Int32.MaxValue convertie en nombre négatif),
+        // exécuter le code suivant. Si on n'impose pas cette condition, on obtient une erreur plus tard dans l'exécution du programme
         if (representation_initiale == -2147483648)
         {
             // Changer la valeur de la variable validation_nombre_a_convertir si on obtient une erreur
@@ -119,7 +119,6 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
     if (representation_initiale != 0)
     {
         // Trouver le plus gros exposant pour décomposer la valeur entrée dans la base donnée
-        // Référence : Microsoft - Math.Log Method https://learn.microsoft.com/en-us/dotnet/api/system.math.log2?view=net-7.0
         int plus_gros_exposant = (int)Math.Floor(Math.Log(Math.Abs(representation_initiale), base_de_lexponentielle));
 
         // Afficher une partie du message
@@ -142,14 +141,12 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
         string representation_finale = "";
 
         // Pour une valeur de compteur_dexposants entre la valeur de plus_gros_exposant et de 0, exécuter le bloc de code suivant
-        // Référence : W3Schools - C# For Loop https://www.w3schools.com/cs/cs_for_loop.php
         for (int compteur_dexposants = plus_gros_exposant; compteur_dexposants >= 0; compteur_dexposants--)
         {
-            // Déclarer et intialiaser la variable nombre_a_convertir_en_chiffre
+            // Déclarer et initialiser la variable nombre_a_convertir_en_chiffre
             int nombre_a_convertir_en_chiffre = 0;
 
-            // Exécuter les instructions suivantes à la condition que
-            // (restant - Math.Pow(base_de_lexponentielle, compteur_dexposants)) >= 0
+            // Exécuter les instructions suivantes à la condition que (restant - Math.Pow(base_de_lexponentielle, compteur_dexposants)) >= 0
             while (restant - Math.Pow(base_de_lexponentielle, compteur_dexposants) >= 0)
             {
                 restant = restant - (int)Math.Pow(base_de_lexponentielle, compteur_dexposants);
@@ -160,14 +157,13 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
             // Afficher le résultat
             Console.WriteLine("Valeur du chiffre " + (compteur_dexposants + 1) + " -> " + SYMBOLES_POUR_CONVERSION[nombre_a_convertir_en_chiffre] + " * " + base_de_lexponentielle + "^" + compteur_dexposants);
 
-            // Si i > 0, alors afficher ce message
+            // Si compteur_dexposants > 0, alors afficher ce message
             if (compteur_dexposants > 0)
             {
                 Console.WriteLine("+");
             }
 
             // Ajouter le symbole de la variable conversion_en_symbole à la fin du string representation_finale
-            // Référence : Stack Overflow - Convert int to string? https://stackoverflow.com/questions/3081916/convert-int-to-string
             representation_finale = representation_finale + SYMBOLES_POUR_CONVERSION[nombre_a_convertir_en_chiffre];
         }
 
@@ -186,7 +182,6 @@ void CalculerEtAfficher(int representation_initiale, int base_de_lexponentielle)
     else
     {
         // Afficher une partie du message
-        // Référence : GeeksforGeeks - Program to Print a New Line in C# https://www.geeksforgeeks.org/program-to-print-a-new-line-in-c-sharp/
         Console.WriteLine("Le nombre 0 représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :\n" +
                           "\nLe nombre ne possède pas de signe\n\nChiffre 1 -> 0 * " + base_de_lexponentielle + "^0\n" +
                           "\nLe nombre 0 représenté en base 10 est équivalent au nombre 0 représenté en base " + base_de_lexponentielle + ".");
