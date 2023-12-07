@@ -1,4 +1,4 @@
-# Convertisseur-de-nombres-en-base-2-a-36
+# Convertisseur_de_nombres_bases_2_a_36
 Mon programme permet de convertir les nombres entiers représentés en base 10 en leur représentation dans une base entière, de la base 2 à la base 36
 
 Screenshot sur les jeux d'essai pour des valeurs positives représentées en base 2
@@ -9,6 +9,9 @@ Screenshot sur les jeux d'essai pour des valeurs positives représentées en bas
 
 Screenshot sur les jeux d'essai pour des valeurs positives représentées en base 10
 ![Screenshot_base_10](https://github.com/TheRealDAZL/Convertisseur-de-nombres-en-base-2-a-36/assets/116024728/ead14500-b3e1-4dde-b1cb-b0c04c0fe017)
+
+Screenshot sur les jeux d'essai pour des valeurs positives représentées en base 16
+![Screenshot_base_16](https://github.com/TheRealDAZL/Convertisseur_de_nombres_bases_2_a_36/assets/116024728/0c7c7b0a-2a2c-4436-8b40-bedbe557b965)
 
 Screenshot sur les jeux d'essai pour des valeurs positives représentées en base 11, 12, 13 et 36
 ![Screenshot_bases_11_12_13_36](https://github.com/TheRealDAZL/Convertisseur-de-nombres-en-base-2-a-36/assets/116024728/eb5c407f-866d-480c-9566-162d04971f82)
