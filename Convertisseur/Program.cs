@@ -129,12 +129,20 @@ void ConvertirEtAfficher(int representation_initiale, int base_de_lexponentielle
         // Note : au début, j'avais utilisé la méthode Math.Floor(Math.Log(restant, base_de_lexponentielle)),
         // mais je me trouvais avec une erreur de résultat dûe à la précision limité de la variable de type
         // double. Ainsi, j'arrondis en premier le résultat de Math.Log(restant, base_de_lexponentielle) au
-        // 14 décimales près, puis j'arrondis vers 0 le résultat obtenu au premier nombre entier
+        // 14 décimales près, puis j'applique la fonction Math.Floor
         // Référence : Microsoft - Math.Round Method
         // https://learn.microsoft.com/en-us/dotnet/api/system.math.round?view=net-8.0
         // Référence : Microsoft - Floating-point numeric types (C# reference)
         // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types
-        double plus_gros_exposant_entier = Math.Round(Math.Round(Math.Log(restant, base_de_lexponentielle), 14), 0, (MidpointRounding)2);
+        double plus_gros_exposant_entier = Math.Log(restant, base_de_lexponentielle);
+        plus_gros_exposant_entier = Math.Round(plus_gros_exposant_entier, 14);
+        plus_gros_exposant_entier = Math.Floor(plus_gros_exposant_entier);
+
+        /*
+        // CODE COMPRESSÉ
+        // double plus_gros_exposant_entier = Math.Floor(Math.Round(Math.Log(restant, base_de_lexponentielle), 14));
+        */
+
 
         // Afficher une partie du message
         Console.WriteLine("Le nombre " + representation_initiale + " représenté en base 10 se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :");
