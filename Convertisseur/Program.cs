@@ -159,94 +159,90 @@ void ConvertirEtAfficher(int representation_initiale, int base_de_lexponentielle
     // Déclarer et initialiser les constantes
     string[] SYMBOLES_POUR_CONVERSION = new string[36] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
-    // Si la valeur de representation_initiale diffère de 0
-    if (representation_initiale != 0)
+    // Si le signe du nombre à convertir est positif, afficher ce message
+    if (representation_initiale > 0)
     {
-        // Si le signe du nombre à convertir est positif, afficher ce message
-        if (representation_initiale > 0)
-        {
-            Console.WriteLine("Le signe du nombre " + representation_initiale + " représenté en base 10 est positif, et il se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :\n");
-        }
-
-        // Si le signe du nombre à convertir est négatif, afficher ce message
-        else
-        {
-            Console.WriteLine("Le signe du nombre " + representation_initiale + " représenté en base 10 est négatif, et il se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :\n");
-        }
-
-        // Déclarer et initialiser les variables restant et representation_finale
-        int restant = Math.Abs(representation_initiale);
-        string representation_finale = "";
-
-        // Pour une valeur de compteur_dexposants de la valeur de plus_gros_exposant à 0, exécuter le bloc de code suivant
-        for (double compteur_dexposants = plus_gros_exposant_entier; compteur_dexposants >= 0; compteur_dexposants--)
-        {
-            // Déclarer et initialiser les variables nombre_a_convertir_en_chiffre et base_et_exposant
-            int nombre_a_convertir_en_chiffre = 0;
-            int base_et_exposant = (int)Math.Pow(base_de_lexponentielle, compteur_dexposants);
-
-            // Si le restant modulo base_et_exposant est différent de 0
-            if (restant % base_et_exposant != 0)
-            {
-                // Définir que nombre_a_convertir_en_chiffre est égal au résultat des étapes suivantes :
-                // 1) Soustraire de restant le résidu de la division par base_et_exposant;
-                // 2) Diviser le résultat précédent par base_et_exposant;
-                // 3) Convertir en int le nouveau résultat.
-                nombre_a_convertir_en_chiffre = (int)((restant - restant % base_et_exposant) / base_et_exposant);
-
-                // Définir que restant est égal à restant moins le résultat de nombre_a_convertir_en_chiffre * base_et_exposant
-                restant = restant - nombre_a_convertir_en_chiffre * base_et_exposant;
-            }
-
-            // Si le restant modulo base_et_exposant est égal à 0 et le restant est égal à 0
-            else if (restant % base_et_exposant == 0 && restant == 0)
-            {
-                // Définir que nombre_a_convertir_en_chiffre est égal à 0
-                nombre_a_convertir_en_chiffre = 0;
-            }
-
-            // Si le restant modulo base_et_exposant est égal à 0 et le restant est différent de 0
-            else
-            {
-                // Définir que nombre_a_convertir_en_chiffre est égal au résultat de la division de restant
-                // par base_et_exposant
-                nombre_a_convertir_en_chiffre = (int)(restant / base_et_exposant);
-            
-                // Définir que le restant est égal à 0
-                restant = 0;
-            }
-
-            // Afficher le résultat
-            Console.WriteLine("Valeur du chiffre en position " + (compteur_dexposants + 1) + " -> " + SYMBOLES_POUR_CONVERSION[nombre_a_convertir_en_chiffre] + " * " + base_de_lexponentielle + "^" + compteur_dexposants);
-
-            // Si compteur_dexposants > 0, alors afficher ce message
-            if (compteur_dexposants > 0)
-            {
-                Console.WriteLine("+");
-            }
-
-            // Ajouter le symbole de la variable conversion_en_symbole à la fin du string representation_finale
-            representation_finale = representation_finale + SYMBOLES_POUR_CONVERSION[nombre_a_convertir_en_chiffre];
-        }
-
-        // Si la valeur de representation_initiale est négative, alors on ajoute un tiret en avant de la valeur de representation_finale
-        if (representation_initiale < 0)
-        {
-            representation_finale = "-" + representation_finale;
-        }
-
-        // Afficher la valeur de representation_finale
-        Console.WriteLine("\nLe nombre " + representation_initiale + " représenté en base 10 est équivalent au nombre " +
-                          representation_finale + " représenté en base " + base_de_lexponentielle + ".");
+        Console.WriteLine("Le signe du nombre " + representation_initiale + " représenté en base 10 est positif, et il se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :\n");
     }
 
-    // Si la valeur de representation_initiale est 0
+    // Si le signe du nombre à convertir est négatif, afficher ce message
+    else if (representation_initiale < 0)
+    {
+        Console.WriteLine("Le signe du nombre " + representation_initiale + " représenté en base 10 est négatif, et il se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :\n");
+    }
+    
+    // Si le nombre n'a pas de signe, afficher ce message
     else
     {
-        // Afficher une partie du message
-        Console.WriteLine("Le signe du nombre " + representation_initiale + " représenté en base 10 ne possède pas de signe, et il se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :\n\nValeur du chiffre en position 1 -> 0 * " + base_de_lexponentielle + "^0\n" +
-                          "\nLe nombre " + representation_initiale + " représenté en base 10 est équivalent au nombre " + representation_initiale + " représenté en base " + base_de_lexponentielle + ".");
+        Console.WriteLine("Le nombre " + representation_initiale + " représenté en base 10 ne possède pas de signe, et il se décompose en la somme d'exponentielle(s) en base " + base_de_lexponentielle + " de la façon suivante :\n");
     }
+
+    // Déclarer et initialiser les variables restant et representation_finale
+    int restant = Math.Abs(representation_initiale);
+    string representation_finale = "";
+
+    // Pour une valeur de compteur_dexposants de la valeur de plus_gros_exposant à 0, exécuter le bloc de code suivant
+    for (double compteur_dexposants = plus_gros_exposant_entier; compteur_dexposants >= 0; compteur_dexposants--)
+    {
+        // Déclarer et initialiser les variables nombre_a_convertir_en_chiffre et base_et_exposant
+        int nombre_a_convertir_en_chiffre = 0;
+        int base_et_exposant = (int)Math.Pow(base_de_lexponentielle, compteur_dexposants);
+
+        // Si le restant modulo base_et_exposant est différent de 0
+        if (restant % base_et_exposant != 0)
+        {
+            // Définir que nombre_a_convertir_en_chiffre est égal au résultat des étapes suivantes :
+            // 1) Soustraire de restant le résidu de la division par base_et_exposant;
+            // 2) Diviser le résultat précédent par base_et_exposant;
+            // 3) Convertir en int le nouveau résultat.
+            nombre_a_convertir_en_chiffre = (int)((restant - restant % base_et_exposant) / base_et_exposant);
+
+            // Définir que restant est égal à restant moins le résultat de nombre_a_convertir_en_chiffre * base_et_exposant
+            restant = restant - nombre_a_convertir_en_chiffre * base_et_exposant;
+        }
+
+        // Si le restant modulo base_et_exposant est égal à 0 et le restant est égal à 0
+        else if (restant % base_et_exposant == 0 && restant == 0)
+        {
+            // Définir que nombre_a_convertir_en_chiffre est égal à 0
+            nombre_a_convertir_en_chiffre = 0;
+        }
+
+        // Si le restant modulo base_et_exposant est égal à 0 et le restant est différent de 0
+        else
+        {
+            // Définir que nombre_a_convertir_en_chiffre est égal au résultat de la division de restant
+            // par base_et_exposant
+            nombre_a_convertir_en_chiffre = (int)(restant / base_et_exposant);
+
+            // Définir que le restant est égal à 0
+            restant = 0;
+        }
+
+        // Afficher le résultat
+        Console.WriteLine("Valeur du chiffre en position " + (compteur_dexposants + 1) + " -> " +
+                          SYMBOLES_POUR_CONVERSION[nombre_a_convertir_en_chiffre] + " * " + base_de_lexponentielle + "^" + compteur_dexposants);
+
+        // Si compteur_dexposants > 0, alors afficher ce message
+        if (compteur_dexposants > 0)
+        {
+            Console.WriteLine("+");
+        }
+
+        // Ajouter le symbole de la variable conversion_en_symbole à la fin du string representation_finale
+        representation_finale = representation_finale + SYMBOLES_POUR_CONVERSION[nombre_a_convertir_en_chiffre];
+    }
+
+    // Si la valeur de representation_initiale est négative, alors on ajoute un tiret en avant de la valeur de representation_finale
+    if (representation_initiale < 0)
+    {
+        representation_finale = "-" + representation_finale;
+    }
+
+    // Afficher la valeur de representation_finale
+    Console.WriteLine("\nLe nombre " + representation_initiale + " représenté en base 10 est équivalent au nombre " +
+                      representation_finale + " représenté en base " + base_de_lexponentielle + ".");
+   
 }
 
 // Afficher un message, puis faire le choix de continuer ou pas
